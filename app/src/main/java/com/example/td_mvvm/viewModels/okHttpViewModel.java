@@ -1,16 +1,21 @@
 package com.example.td_mvvm.viewModels;
 
+import android.os.SystemClock;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.td_mvvm.models.Cmaclasse;
-import com.example.td_mvvm.models.PriceResponse;
+import com.example.td_mvvm.models.Coin;
+import com.example.td_mvvm.models.CoinResponseMain;
 import com.example.td_mvvm.network.OkHttpNetworkManager;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -45,9 +50,15 @@ public class okHttpViewModel extends ViewModel implements IViewModel  {
 
     private void handleResponse(String responseString){
         Gson gson = new Gson();
-        PriceResponse entity = gson.fromJson(responseString, PriceResponse.class);
+        ArrayList<Coin> liste = new ArrayList<>();
+        CoinResponseMain entity = gson.fromJson(responseString, CoinResponseMain.class);
         if(entity != null && entity.getData()!= null){
-            data.postValue(new Cmaclasse(entity.getData().getPrice()));
+            // Faire un return dans data pour chaque valeur, faire une boucle ?
+            for(int i=0;i<entity.getData().getCoins().size()-1;i++){
+                SystemClock.sleep(100);
+                data.postValue(new Cmaclasse(entity.getData().getCoins().get(i)));
+            }
+
         }
     }
 }
