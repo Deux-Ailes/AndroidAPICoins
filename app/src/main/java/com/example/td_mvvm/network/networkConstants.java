@@ -4,8 +4,7 @@ public class networkConstants {
     public static final String BASE_URL =
             "https://coinranking1.p.rapidapi.com";
     public static final String OPTIONS =
-            "/coins?orderBy=marketCap&orderDirection=desc&limit=10";
-
+            "/coins?orderBy=marketCap&orderDirection=desc&limit=11";
     public static final String HOST_HEADER_NAME =
             "x-rapidapi-host";
     public static final String HOST_HEADER_VALUE =

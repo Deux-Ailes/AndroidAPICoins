@@ -3,13 +3,13 @@ package com.example.td_mvvm.models;
 import java.util.List;
 
 public class dataCoin {
-    public List<Coin> getCoinList() {
-        return coinList;
+    public List<Coin> getCoins() {
+        return coins;
     }
 
-    public void setCoinList(List<Coin> coinList) {
-        this.coinList = coinList;
+    public void setCoins(List<Coin> coins) {
+        this.coins = coins;
     }
 
-    List<Coin> coinList;
+    List<Coin> coins;
 }

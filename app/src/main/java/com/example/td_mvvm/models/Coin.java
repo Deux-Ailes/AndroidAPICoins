@@ -4,6 +4,7 @@ public class Coin {
     private String symbol;
     private String name;
     private String price;
+    private int rank;
 
     public String getSymbol() {
         return symbol;
@@ -37,6 +38,6 @@ public class Coin {
         this.rank = rank;
     }
 
-    private int rank;
+
 
 }
