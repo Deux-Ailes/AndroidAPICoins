@@ -13,7 +13,7 @@ public class PreferencesHelper {
 
     private static final String SHARED_PREFERENCES_NAME = "examplePreferences";
     private static final String API_KEY = "apiKey";
-
+    private static final String FAV_KEY = "coinKey";
     private final SharedPreferences preferences;
 
     private PreferencesHelper() {
@@ -35,4 +35,13 @@ public class PreferencesHelper {
     public void setApiKey(String apiKey) {
         preferences.edit().putString(API_KEY, apiKey).apply();
     }
+
+    public String getFavCoin(){
+        return preferences.getString(FAV_KEY,null);
+    }
+
+    public void setFavCoin(String apiKey) {
+        preferences.edit().putString(FAV_KEY, apiKey).apply();
+    }
+
 }

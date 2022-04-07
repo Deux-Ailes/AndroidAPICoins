@@ -3,11 +3,14 @@ package com.example.td_mvvm.models;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.td_mvvm.R;
+import com.example.td_mvvm.storage.PreferencesHelper;
 
 import org.w3c.dom.Text;
 
@@ -22,7 +25,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         private final TextView rang;
         private final TextView prix;
         private final TextView nom;
-
+        private final LinearLayout layout;
 
         /**
          * Constructeur qui attribue aux var locales les TV
@@ -33,6 +36,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             rang = view.findViewById(R.id.Rang);
             prix = view.findViewById(R.id.Prix);
             nom = view.findViewById(R.id.Nom);
+            layout = view.findViewById(R.id.layoutdefou);
+
         }
 
         /**
@@ -45,6 +50,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             a.add(prix);
             a.add(nom);
             return a;
+        }
+
+        public LinearLayout getLayout(){
+            return this.layout;
         }
     }
 
@@ -69,11 +78,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         viewHolder.getTextsView().get(0).setText(String.valueOf(rang)); // Conversion en String obligatoire, int à l'origine
         viewHolder.getTextsView().get(2).setText(nom);
         viewHolder.getTextsView().get(1).setText(price);
+        viewHolder.getLayout().setOnClickListener(v->{PreferencesHelper.getInstance().setFavCoin(localDataSet.get(position).getUuid());});
     }
 
     public int getItemCount(){
         return localDataSet.size();
     }
-
-
+    
 }
