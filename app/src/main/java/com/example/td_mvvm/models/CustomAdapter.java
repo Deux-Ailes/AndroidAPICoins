@@ -1,25 +1,30 @@
 package com.example.td_mvvm.models;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.td_mvvm.CoinDetails;
+import com.example.td_mvvm.MainActivity;
 import com.example.td_mvvm.R;
 import com.example.td_mvvm.storage.PreferencesHelper;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder>{
 
+    public interface OnItemClickListener {
+        void onItemClick(Coin item);
+    }
+
     private ArrayList<Coin> localDataSet; // Dataset fourni est une liste de coin
+    private final OnItemClickListener listener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView rang;
@@ -40,6 +45,22 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
         }
 
+        public void bind(final Coin item, final OnItemClickListener listener){
+            String nom = item.getName();
+            String price = item.getPrice();
+            int rang = item.getRank();
+            this.rang.setText(String.valueOf(rang)); // Conversion en String obligatoire, int à l'origine
+            this.nom.setText(nom);
+            this.prix.setText(price);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClick(item);
+                }
+            });
+
+        }
+
         /**
          * Fonction permettant d'obtenir les TV du VH
          * @return Liste des text views du ViewHolder
@@ -57,8 +78,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         }
     }
 
-    public CustomAdapter(ArrayList<Coin> a){
+    public CustomAdapter(ArrayList<Coin> a, OnItemClickListener listener){
         localDataSet = a;
+        this.listener = listener;
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType){
@@ -72,17 +94,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
      * @param position
      */
     public void onBindViewHolder(ViewHolder viewHolder, final int position){
-        String nom = localDataSet.get(position).getName();
-        String price = localDataSet.get(position).getPrice();
-        int rang = localDataSet.get(position).getRank();
-        viewHolder.getTextsView().get(0).setText(String.valueOf(rang)); // Conversion en String obligatoire, int à l'origine
-        viewHolder.getTextsView().get(2).setText(nom);
-        viewHolder.getTextsView().get(1).setText(price);
-        viewHolder.getLayout().setOnClickListener(v->{PreferencesHelper.getInstance().setFavCoin(localDataSet.get(position).getUuid());});
+        viewHolder.bind(localDataSet.get(position),listener);
     }
+
 
     public int getItemCount(){
         return localDataSet.size();
     }
-    
+
 }

@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
@@ -20,6 +21,12 @@ import com.example.td_mvvm.viewModels.okHttpViewModel;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ *
+ *  MEINARD Simon   (il ne push jamais car il est timide)
+ *  CLERICE Elliot  (le fan du C)
+ *
+ */
 public class MainActivity extends AppCompatActivity {
 
     private static Context APPLICATION_CONTEXT;
@@ -43,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         maVue = new RetrofitViewModel();
         listeDesInfos = new ArrayList<>();
         configureRecycler();
+        Intent intent = getIntent();
+        if(intent.getExtras()!=null) maVue.acquisitionDonnes();
     }
 
     @Override
@@ -75,8 +84,23 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    private void changementActivite(Coin item){
+        Intent intent = new Intent(this,CoinDetails.class);
+        Bundle b = new Bundle();
+        b.putSerializable("PIECE",item);
+        intent.putExtras(b);
+        startActivity(intent);
+    }
+
     private void configureRecycler(){
-        this.monAdaptateurPerso = new CustomAdapter(listeDesInfos);
+        this.monAdaptateurPerso = new CustomAdapter(listeDesInfos, new CustomAdapter.OnItemClickListener(){
+            @Override public void onItemClick(Coin item) {
+                PreferencesHelper.getInstance().setFavCoin(item.getUuid());
+                System.out.println(PreferencesHelper.getInstance().getFavCoin());
+                changementActivite(item);
+
+            }
+        });
         recyclage=binding.lerecycleur;
         recyclage.setAdapter(this.monAdaptateurPerso);
         recyclage.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
