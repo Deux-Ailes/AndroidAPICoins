@@ -3,78 +3,58 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <Button
+        android:id="@+id/monBouton"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:text="CLIC"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/btn_toast" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="189dp"
-            android:layout_weight="1">
+    <Button
+        android:id="@+id/btn_toast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:minWidth="48dp"
+        android:text="TOASTING"
+        app:layout_constraintStart_toEndOf="@+id/btn_id"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/monBouton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_weight="1"
-                android:text="CLIC"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_toast" />
+    <Button
+        android:id="@+id/btn_API"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="API"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/btn_toast"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_weight="1"
-                android:minWidth="48dp"
-                android:text="TOASTING"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/btn_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:text="Rand str"
+        app:layout_constraintStart_toEndOf="@+id/btn_API"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/btn_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="148dp"
-                android:layout_marginTop="16dp"
-                android:layout_weight="1"
-                android:text="Rand str"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/btn_API"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:text="API"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/lerecycleur"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lerecycleur"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/monBouton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
