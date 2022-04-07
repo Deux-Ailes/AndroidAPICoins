@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -23,9 +24,9 @@ import okhttp3.Response;
 public class okHttpViewModel extends ViewModel implements IViewModel  {
 
     // Pattern observer -> Se trigger dès qu'il y a un changement dans une valeur observée
-    private final MutableLiveData<Cmaclasse> data = new MutableLiveData<>();
+    private final MutableLiveData<List<Coin>> data = new MutableLiveData<>();
 
-    public LiveData<Cmaclasse> getData(){
+    public LiveData<List<Coin>> getData(){
         return this.data;
     }
 
@@ -52,11 +53,7 @@ public class okHttpViewModel extends ViewModel implements IViewModel  {
         ArrayList<Coin> liste = new ArrayList<>();
         CoinResponseMain entity = gson.fromJson(responseString, CoinResponseMain.class);
         if(entity != null && entity.getData()!= null){
-            // Faire un return dans data pour chaque valeur, faire une boucle ?
-            for(int i=0;i<entity.getData().getCoins().size()-1;i++){
-                SystemClock.sleep(100);
-                data.postValue(new Cmaclasse(entity.getData().getCoins().get(i)));
-            }
+            data.postValue(entity.getData().getCoins());
 
         }
     }

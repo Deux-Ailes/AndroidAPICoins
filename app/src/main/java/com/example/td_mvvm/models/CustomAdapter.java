@@ -12,10 +12,11 @@ import com.example.td_mvvm.R;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder>{
 
-    private ArrayList<ArrayList<String>> localDataSet;
+    private ArrayList<Coin> localDataSet;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView rang;
@@ -29,14 +30,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         }
         public ArrayList<TextView> getTextsView(){
             ArrayList<TextView> a = new ArrayList<>();
-            a.add(0,rang);
-            a.add(1,prix);
-            a.add(2,nom);
+            a.add(rang);
+            a.add(prix);
+            a.add(nom);
             return a;
         }
     }
 
-    public CustomAdapter(ArrayList<ArrayList<String>> a){
+    public CustomAdapter(ArrayList<Coin> a){
         localDataSet = a;
     }
 
@@ -46,9 +47,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     }
 
     public void onBindViewHolder(ViewHolder viewHolder, final int position){
-        for(int i=0;i<3;i++){
-            viewHolder.getTextsView().get(i).setText(localDataSet.get(position).get(i));
-        }
+        String nom = localDataSet.get(position).getName();
+        String prix = localDataSet.get(position).getPrice();
+        int rang = localDataSet.get(position).getRank();
+        viewHolder.getTextsView().get(0).setText(String.valueOf(rang));
+        viewHolder.getTextsView().get(2).setText(nom);
+        viewHolder.getTextsView().get(1).setText(prix);
     }
 
     public int getItemCount(){

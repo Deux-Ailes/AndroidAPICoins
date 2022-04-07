@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import com.example.td_mvvm.databinding.ActivityMainBinding;
+import com.example.td_mvvm.models.Coin;
 import com.example.td_mvvm.models.CustomAdapter;
 import com.example.td_mvvm.viewModels.IViewModel;
+import com.example.td_mvvm.viewModels.RetrofitViewModel;
 import com.example.td_mvvm.viewModels.okHttpViewModel;
 
 import java.util.ArrayList;
@@ -18,14 +20,14 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private IViewModel maVue;
     private CustomAdapter monAdaptateurPerso;
-    private ArrayList<ArrayList<String>> listeDesInfos;
+    private ArrayList<Coin> listeDesInfos;
     private RecyclerView recyclage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        maVue = new okHttpViewModel();
+        maVue = new RetrofitViewModel();
         listeDesInfos = new ArrayList<>();
         configureRecycler();
     }
@@ -37,9 +39,10 @@ public class MainActivity extends AppCompatActivity {
             listeDesInfos.clear();
             maVue.acquisitionDonnes();
         });
-        maVue.getData().observe(this, cmaclasse -> {
+
+        maVue.getData().observe(this, coins -> {
             //binding.tvTropbien.setText(cmaclasse.getString());
-            listeDesInfos.add(cmaclasse.getCoinString());
+            listeDesInfos.addAll(coins);
             this.monAdaptateurPerso.notifyDataSetChanged();
         });
     }
