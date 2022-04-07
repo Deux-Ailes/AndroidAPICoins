@@ -3,7 +3,7 @@ package com.example.td_mvvm.network;
 public class networkConstants {
     public static final String BASE_URL =
             "https://coinranking1.p.rapidapi.com";
-    public static final String OPTIONS =
+    public static final String OPTION_URL =
             "/coins?orderBy=marketCap&orderDirection=desc&limit=11";
     public static final String HOST_HEADER_NAME =
             "x-rapidapi-host";

@@ -1,21 +1,14 @@
 package com.example.td_mvvm;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.td_mvvm.databinding.ActivityMainBinding;
-import com.example.td_mvvm.models.Cmaclasse;
 import com.example.td_mvvm.models.CustomAdapter;
 import com.example.td_mvvm.viewModels.IViewModel;
-import com.example.td_mvvm.viewModels.maVueModel;
 import com.example.td_mvvm.viewModels.okHttpViewModel;
 
 import java.util.ArrayList;
@@ -42,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         binding.monBouton.setOnClickListener(v->{
             listeDesInfos.clear();
-            maVue.generateNextValue();
+            maVue.acquisitionDonnes();
         });
         maVue.getData().observe(this, cmaclasse -> {
             //binding.tvTropbien.setText(cmaclasse.getString());

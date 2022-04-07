@@ -6,5 +6,5 @@ import com.example.td_mvvm.models.Cmaclasse;
 
 public interface IViewModel {
     LiveData<Cmaclasse> getData();
-    void generateNextValue();
+    void acquisitionDonnes();
 }

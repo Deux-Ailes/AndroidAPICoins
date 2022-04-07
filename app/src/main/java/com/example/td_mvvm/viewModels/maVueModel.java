@@ -17,7 +17,7 @@ public class maVueModel extends ViewModel implements IViewModel {
         return this.data;
     }
 
-    public void generateNextValue(){
+    public void acquisitionDonnes(){
         byte[] array = new byte[100];
         new Random().nextBytes(array);
         String generatedString = new String(array, StandardCharsets.UTF_8);

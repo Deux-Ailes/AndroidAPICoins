@@ -1,7 +1,6 @@
 package com.example.td_mvvm.viewModels;
 
 import android.os.SystemClock;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -30,7 +29,7 @@ public class okHttpViewModel extends ViewModel implements IViewModel  {
         return this.data;
     }
 
-    public void generateNextValue(){
+    public void acquisitionDonnes(){
         OkHttpNetworkManager.INSTANCE.request().enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -40,7 +39,7 @@ public class okHttpViewModel extends ViewModel implements IViewModel  {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 try {
-                    handleResponse(response.body().string());
+                    getListOfCoins(response.body().string());
                 }catch (IOException e){
                     e.printStackTrace();
                 }
@@ -48,7 +47,7 @@ public class okHttpViewModel extends ViewModel implements IViewModel  {
         });
     }
 
-    private void handleResponse(String responseString){
+    private void getListOfCoins(String responseString){
         Gson gson = new Gson();
         ArrayList<Coin> liste = new ArrayList<>();
         CoinResponseMain entity = gson.fromJson(responseString, CoinResponseMain.class);

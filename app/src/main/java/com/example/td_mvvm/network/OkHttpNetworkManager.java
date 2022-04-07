@@ -15,7 +15,7 @@ public class OkHttpNetworkManager {
 
     public Call request(){
         Request request = baseRequestBuilder()
-                .url(networkConstants.BASE_URL + networkConstants.OPTIONS)
+                .url(networkConstants.BASE_URL + networkConstants.OPTION_URL)
                 .get()
                 .build();
         return client.newCall(request);
