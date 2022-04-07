@@ -16,18 +16,29 @@ import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder>{
 
-    private ArrayList<Coin> localDataSet;
+    private ArrayList<Coin> localDataSet; // Dataset fourni est une liste de coin
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView rang;
         private final TextView prix;
         private final TextView nom;
+
+
+        /**
+         * Constructeur qui attribue aux var locales les TV
+         * @param view
+         */
         public ViewHolder(View view) {
             super(view);
             rang = view.findViewById(R.id.Rang);
             prix = view.findViewById(R.id.Prix);
             nom = view.findViewById(R.id.Nom);
         }
+
+        /**
+         * Fonction permettant d'obtenir les TV du VH
+         * @return Liste des text views du ViewHolder
+         */
         public ArrayList<TextView> getTextsView(){
             ArrayList<TextView> a = new ArrayList<>();
             a.add(rang);
@@ -46,13 +57,18 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         return new ViewHolder(view);
     }
 
+    /**
+     * Attribution des valeurs au view holder selon la position dans le DataSet
+     * @param viewHolder
+     * @param position
+     */
     public void onBindViewHolder(ViewHolder viewHolder, final int position){
         String nom = localDataSet.get(position).getName();
-        String prix = localDataSet.get(position).getPrice();
+        String price = localDataSet.get(position).getPrice();
         int rang = localDataSet.get(position).getRank();
-        viewHolder.getTextsView().get(0).setText(String.valueOf(rang));
+        viewHolder.getTextsView().get(0).setText(String.valueOf(rang)); // Conversion en String obligatoire, int à l'origine
         viewHolder.getTextsView().get(2).setText(nom);
-        viewHolder.getTextsView().get(1).setText(prix);
+        viewHolder.getTextsView().get(1).setText(price);
     }
 
     public int getItemCount(){

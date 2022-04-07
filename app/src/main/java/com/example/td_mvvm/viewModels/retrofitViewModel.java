@@ -21,17 +21,17 @@ import retrofit2.Response;
 
 public class RetrofitViewModel extends ViewModel implements IViewModel {
 
-    private final MutableLiveData<List<Coin>> data = new MutableLiveData<>();
+    private final MutableLiveData<List<Coin>> data = new MutableLiveData<>(); // On attend une liste de Coin pour étudier les changements de données
 
     public LiveData<List<Coin>> getData() {
         return data;
-    }
+    } // Retourne une liste de coins
 
     @Override
     public void acquisitionDonnes() {
         RetrofitNetworkManager.coinRankingAPI.getCoinList().enqueue(new Callback<CoinResponseMain>() {
             @Override
-            public void onResponse(Call<CoinResponseMain> call, Response<CoinResponseMain> response) {
+            public void onResponse(Call<CoinResponseMain> call, Response<CoinResponseMain> response) { // L'appel est de type CoinResponseMain
                 if (response.body() != null) {
                     handleResponse(response.body());
                 }
@@ -45,6 +45,6 @@ public class RetrofitViewModel extends ViewModel implements IViewModel {
     }
 
     private void handleResponse(CoinResponseMain response) {
-        data.postValue(response.getData().getCoins());
+        data.postValue(response.getData().getCoins()); // Retour d'une liste à partir de la répones
     }
 }
