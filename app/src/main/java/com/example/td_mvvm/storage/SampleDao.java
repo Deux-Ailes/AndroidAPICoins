@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.td_mvvm.models.Coin;
+import com.example.td_mvvm.models.Sparkline;
 
 import java.util.List;
 
@@ -18,5 +19,8 @@ public interface SampleDao {
 
     @Query("SELECT * FROM pieces_table")
     LiveData<List<Coin>> getAll();
+
+    @Query("SELECT * FROM pieces_table WHERE uuid== :uuid")
+    Coin getCoinOnUID(String uuid);
 
 }

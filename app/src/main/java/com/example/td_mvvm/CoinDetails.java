@@ -8,7 +8,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.td_mvvm.databinding.ActivityCoinDetailsBinding;
 import com.example.td_mvvm.models.Coin;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CoinDetails extends AppCompatActivity {
     private Coin maCoin;
@@ -51,9 +58,9 @@ public class CoinDetails extends AppCompatActivity {
         Picasso.with(this).load(uri).fit().centerInside().error(R.drawable.ic_launcher_background).into(iv);
 
 
-        /*
+
         // Préparation de la chart
-        List<String> data = this.maCoin.getSparkline(); // Obtention du tableau
+        List<String> data = this.maCoin.retrieve_Sparkline(); // Obtention du tableau
         LineChart graphique = findViewById(R.id.chart);
         List<Entry> entree = new ArrayList<Entry>();
         int position = 0;
@@ -73,7 +80,7 @@ public class CoinDetails extends AppCompatActivity {
         graphique.setScaleEnabled(true);
         graphique.setPinchZoom(true);
         graphique.invalidate();
-         */
+
     }
 
 

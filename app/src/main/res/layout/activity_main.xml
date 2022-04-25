@@ -20,12 +20,12 @@
         android:id="@+id/btn_toast"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="16dp"
         android:layout_weight="1"
         android:minWidth="48dp"
         android:text="TOASTING"
-        app:layout_constraintStart_toEndOf="@+id/btn_id"
+        app:layout_constraintStart_toEndOf="@+id/btn_API"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -36,17 +36,6 @@
         android:layout_marginTop="16dp"
         android:text="API"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btn_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
-        android:layout_weight="1"
-        android:text="Rand str"
-        app:layout_constraintStart_toEndOf="@+id/btn_API"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView

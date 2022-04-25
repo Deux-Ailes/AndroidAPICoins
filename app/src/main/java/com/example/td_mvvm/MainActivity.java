@@ -17,6 +17,8 @@ import com.example.td_mvvm.viewModels.IViewModel;
 import com.example.td_mvvm.viewModels.retrofitViewModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
 /**
@@ -55,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        binding.btnId.setOnClickListener(v -> {
+        /*binding.btnId.setOnClickListener(v -> {
             PreferencesHelper.getInstance().setApiKey(getRandomString(64));
-        });
+        });*/
 
         binding.btnAPI.setOnClickListener(v -> {
             PreferencesHelper.getInstance().setApiKey("c943e0f237msh7c19578a3d59636p1131e8jsnc67ebeb4fa26");
@@ -73,6 +75,12 @@ public class MainActivity extends AppCompatActivity {
 
         maVue.getData().observe(this, coins -> {
             listeDesInfos.addAll(coins);
+            Collections.sort(listeDesInfos, new Comparator<Coin>() { // faut bien les trier dans l'ordre, changement de l'ordre dans
+                @Override
+                public int compare(Coin o1, Coin o2) {
+                    return Double.compare(o1.getRank(), o2.getRank());
+                }
+            });
             this.monAdaptateurPerso.notifyDataSetChanged(); // Problème, lors d'un retour, update
         });
     }
