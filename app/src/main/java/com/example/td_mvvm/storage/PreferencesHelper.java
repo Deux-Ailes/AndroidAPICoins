@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.td_mvvm.ExampleApplication;
-import com.example.td_mvvm.MainActivity;
 
 
 public class PreferencesHelper {
@@ -29,15 +28,15 @@ public class PreferencesHelper {
     }
 
     public String getApiKey() {
-         return preferences.getString(API_KEY, null);
+        return preferences.getString(API_KEY, null);
     }
 
     public void setApiKey(String apiKey) {
         preferences.edit().putString(API_KEY, apiKey).apply();
     }
 
-    public String getFavCoin(){
-        return preferences.getString(FAV_KEY,null);
+    public String getFavCoin() {
+        return preferences.getString(FAV_KEY, null);
     }
 
     public void setFavCoin(String apiKey) {

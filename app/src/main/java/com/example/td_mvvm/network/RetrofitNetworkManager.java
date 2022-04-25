@@ -1,7 +1,5 @@
 package com.example.td_mvvm.network;
 
-import com.example.td_mvvm.network.networkConstants;
-
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

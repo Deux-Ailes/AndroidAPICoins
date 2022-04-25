@@ -1,16 +1,15 @@
 package com.example.td_mvvm.viewModels;
 
-import android.os.SystemClock;
+import android.app.Application;
 
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.td_mvvm.models.Coin;
 import com.example.td_mvvm.models.CoinResponseMain;
-import com.example.td_mvvm.models.PriceResponse;
 import com.example.td_mvvm.network.RetrofitNetworkManager;
-import com.example.td_mvvm.models.Cmaclasse;
+import com.example.td_mvvm.storage.DataRepository;
 
 import java.util.List;
 
@@ -19,14 +18,19 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class RetrofitViewModel extends ViewModel implements IViewModel {
+public class retrofitViewModel extends AndroidViewModel implements IViewModel {
 
-    private final MutableLiveData<List<Coin>> data = new MutableLiveData<>(); // On attend une liste de Coin pour étudier les changements de données
-
+    private LiveData<List<Coin>> data = new MutableLiveData<>(); // On attend une liste de Coin pour étudier les changements de données
+    private DataRepository stockageDB;
     public LiveData<List<Coin>> getData() {
         return data;
     } // Retourne une liste de coins
 
+    public retrofitViewModel(Application application) {
+        super(application);
+        stockageDB = new DataRepository(application);
+        data = stockageDB.getData();
+    }
     @Override
     public void acquisitionDonnes() {
         RetrofitNetworkManager.coinRankingAPI.getCoinList().enqueue(new Callback<CoinResponseMain>() {
@@ -45,6 +49,10 @@ public class RetrofitViewModel extends ViewModel implements IViewModel {
     }
 
     private void handleResponse(CoinResponseMain response) {
-        data.postValue(response.getData().getCoins()); // Retour d'une liste à partir de la répones
+        //data.postValue(response.getData().getCoins()); // Retour d'une liste à partir de la répones
+        for ( Coin coin: response.getData().getCoins()) {
+            stockageDB.insertData(coin);
+        }
+
     }
 }

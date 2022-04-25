@@ -1,7 +1,5 @@
 package com.example.td_mvvm.models;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +8,11 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.td_mvvm.CoinDetails;
-import com.example.td_mvvm.MainActivity;
 import com.example.td_mvvm.R;
-import com.example.td_mvvm.storage.PreferencesHelper;
 
 import java.util.ArrayList;
 
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder>{
+public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
     public interface OnItemClickListener {
         void onItemClick(Coin item);
@@ -34,6 +29,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
         /**
          * Constructeur qui attribue aux var locales les TV
+         *
          * @param view
          */
         public ViewHolder(View view) {
@@ -45,7 +41,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
         }
 
-        public void bind(final Coin item, final OnItemClickListener listener){
+        public void bind(final Coin item, final OnItemClickListener listener) {
             String nom = item.getName();
             String price = item.getPrice();
             int rang = item.getRank();
@@ -63,9 +59,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
         /**
          * Fonction permettant d'obtenir les TV du VH
+         *
          * @return Liste des text views du ViewHolder
          */
-        public ArrayList<TextView> getTextsView(){
+        public ArrayList<TextView> getTextsView() {
             ArrayList<TextView> a = new ArrayList<>();
             a.add(rang);
             a.add(prix);
@@ -73,32 +70,33 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             return a;
         }
 
-        public LinearLayout getLayout(){
+        public LinearLayout getLayout() {
             return this.layout;
         }
     }
 
-    public CustomAdapter(ArrayList<Coin> a, OnItemClickListener listener){
+    public CustomAdapter(ArrayList<Coin> a, OnItemClickListener listener) {
         localDataSet = a;
         this.listener = listener;
     }
 
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType){
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layoutdurecycler, viewGroup, false);
         return new ViewHolder(view);
     }
 
     /**
      * Attribution des valeurs au view holder selon la position dans le DataSet
+     *
      * @param viewHolder
      * @param position
      */
-    public void onBindViewHolder(ViewHolder viewHolder, final int position){
-        viewHolder.bind(localDataSet.get(position),listener);
+    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+        viewHolder.bind(localDataSet.get(position), listener);
     }
 
 
-    public int getItemCount(){
+    public int getItemCount() {
         return localDataSet.size();
     }
 
