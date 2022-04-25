@@ -5,6 +5,4 @@ public interface OnItemClickListener {
     void onItemClick(Coin item);
 
 
-
-
 }

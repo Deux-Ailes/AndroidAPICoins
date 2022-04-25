@@ -10,10 +10,13 @@ public class OkHttpNetworkManager {
     static {
         INSTANCE = new OkHttpNetworkManager();
     }
-    private final OkHttpClient client = new OkHttpClient();
-    private OkHttpNetworkManager(){}
 
-    public Call request(){
+    private final OkHttpClient client = new OkHttpClient();
+
+    private OkHttpNetworkManager() {
+    }
+
+    public Call request() {
         Request request = baseRequestBuilder()
                 .url(networkConstants.BASE_URL + networkConstants.OPTION_URL)
                 .get()
@@ -21,9 +24,9 @@ public class OkHttpNetworkManager {
         return client.newCall(request);
     }
 
-    private Request.Builder baseRequestBuilder(){
+    private Request.Builder baseRequestBuilder() {
         return new Request.Builder()
-        .addHeader(networkConstants.KEY_HEADER_NAME,networkConstants.KEY_HEADER_VALUE)
-        .addHeader(networkConstants.HOST_HEADER_NAME,networkConstants.HOST_HEADER_VALUE);
+                .addHeader(networkConstants.KEY_HEADER_NAME, networkConstants.KEY_HEADER_VALUE)
+                .addHeader(networkConstants.HOST_HEADER_NAME, networkConstants.HOST_HEADER_VALUE);
     }
 }

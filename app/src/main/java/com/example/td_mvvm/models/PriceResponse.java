@@ -21,6 +21,4 @@ public class PriceResponse {
     private String status;
 
 
-
-
 }
