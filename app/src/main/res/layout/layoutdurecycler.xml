@@ -1,28 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutdefou"
     android:layout_width="match_parent"
     android:layout_height="40dp">
+
+    <ImageView
+        android:id="@+id/monIV"
+        android:layout_width="10dp"
+        android:layout_height="20dp"
+        android:layout_weight="1"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/Rang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:textAlignment="viewStart" />
 
     <TextView
         android:id="@+id/Nom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:textAlignment="center" />
 
     <TextView
         android:id="@+id/Prix"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:textAlignment="textEnd" />
 
 </LinearLayout>

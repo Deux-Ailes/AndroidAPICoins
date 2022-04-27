@@ -7,7 +7,6 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.td_mvvm.models.Coin;
-import com.example.td_mvvm.models.Sparkline;
 
 import java.util.List;
 

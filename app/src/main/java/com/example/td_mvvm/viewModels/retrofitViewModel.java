@@ -22,6 +22,7 @@ public class retrofitViewModel extends AndroidViewModel implements IViewModel {
 
     private LiveData<List<Coin>> data = new MutableLiveData<>(); // On attend une liste de Coin pour étudier les changements de données
     private DataRepository stockageDB;
+
     public LiveData<List<Coin>> getData() {
         return data;
     } // Retourne une liste de coins
@@ -31,6 +32,7 @@ public class retrofitViewModel extends AndroidViewModel implements IViewModel {
         stockageDB = new DataRepository(application);
         data = stockageDB.getData();
     }
+
     @Override
     public void acquisitionDonnes() {
         RetrofitNetworkManager.coinRankingAPI.getCoinList().enqueue(new Callback<CoinResponseMain>() {
@@ -50,7 +52,7 @@ public class retrofitViewModel extends AndroidViewModel implements IViewModel {
 
     private void handleResponse(CoinResponseMain response) {
         //data.postValue(response.getData().getCoins()); // Retour d'une liste à partir de la répones
-        for ( Coin coin: response.getData().getCoins()) {
+        for (Coin coin : response.getData().getCoins()) {
             stockageDB.insertData(coin);
         }
 

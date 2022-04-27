@@ -24,6 +24,7 @@ public class Cmaclasse {
             listInfoCoins.add(0, String.valueOf(this.coin.getRank()));
             listInfoCoins.add(1, this.coin.getPrice());
             listInfoCoins.add(2, this.coin.getName());
+            listInfoCoins.add(3, this.coin.getIconUrl());
             return listInfoCoins;
         }
         return null;

@@ -31,13 +31,16 @@ public class Coin implements Serializable {
     @ColumnInfo(name = "rank")
     private int rank;
 
+    @ColumnInfo(name = "btcPrice")
+    private String btcPrice;
+
     @ColumnInfo(name = "iconUrl")
     private String iconUrl;
 
     @ColumnInfo(name = "marketCap")
     private String marketCap;
 
-//    @ColumnInfo(name = "sparkLine")
+    //    @ColumnInfo(name = "sparkLine")
     @Ignore
     private List<String> sparkline;
 
@@ -49,16 +52,18 @@ public class Coin implements Serializable {
         this.data_sparkline = data_sparkline;
     }
 
-    public void update_Sparkline(){
+    public void update_Sparkline() {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<String>>() {}.getType();
+        Type type = new TypeToken<List<String>>() {
+        }.getType();
         data_sparkline = gson.toJson(this.getSparkline(), type);
     }
 
-    public List<String> retrieve_Sparkline(){
+    public List<String> retrieve_Sparkline() {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<String>>() {}.getType();
-        return gson.fromJson(this.data_sparkline,type);
+        Type type = new TypeToken<List<String>>() {
+        }.getType();
+        return gson.fromJson(this.data_sparkline, type);
     }
 
     private String data_sparkline;
@@ -104,7 +109,7 @@ public class Coin implements Serializable {
         this.uuid = uuid;
     }
 
-   public List<String> getSparkline() {
+    public List<String> getSparkline() {
         return sparkline;
     }
 
@@ -127,5 +132,13 @@ public class Coin implements Serializable {
 
     public void setIconUrl(String icon) {
         this.iconUrl = icon;
+    }
+
+    public String getBtcPrice() {
+        return btcPrice;
+    }
+
+    public void setBtcPrice(String btcPrice) {
+        this.btcPrice = btcPrice;
     }
 }

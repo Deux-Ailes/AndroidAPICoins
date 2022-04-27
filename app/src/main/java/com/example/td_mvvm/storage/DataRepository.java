@@ -23,9 +23,9 @@ public class DataRepository {
         return data;
     }
 
-   public void insertData(Coin maPiece) {
+    public void insertData(Coin maPiece) {
         AppDatabase.databaseWriteExecutor.execute(() -> {
             sampleDao.insert(maPiece);
         });
-   }
+    }
 }

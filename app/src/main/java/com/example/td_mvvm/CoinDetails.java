@@ -46,9 +46,6 @@ public class CoinDetails extends AppCompatActivity {
         binding.tvRank.setText("Rang : " + String.valueOf(this.maCoin.getRank()));
         binding.button.setOnClickListener(v -> {
             Intent intent = new Intent(this, MainActivity.class);
- //           Bundle bundle = new Bundle();
-            //bundle.putFloat("TESTAS",122); // TODO : Faire quelque chose de plus propre
- //           intent.putExtras(bundle);
             startActivity(intent);
         });
         // Image
@@ -56,7 +53,6 @@ public class CoinDetails extends AppCompatActivity {
         String uri = this.maCoin.getIconUrl();
         uri = uri.substring(0, uri.length() - 3) + "png";
         Picasso.with(this).load(uri).fit().centerInside().error(R.drawable.ic_launcher_background).into(iv);
-
 
 
         // Préparation de la chart
