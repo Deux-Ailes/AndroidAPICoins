@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">TD_MVVM</string>
+    <string name="refresh">Mise à jour des informations</string>
+    <string name="clic">CLIC</string>
+    <string name="toasting">Test fct</string>
 </resources>

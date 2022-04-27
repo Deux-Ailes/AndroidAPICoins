@@ -13,13 +13,12 @@ import java.util.List;
 @Dao
 public interface SampleDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Coin sampleModel);
 
     @Query("SELECT * FROM pieces_table")
     LiveData<List<Coin>> getAll();
 
-    @Query("SELECT * FROM pieces_table WHERE uuid== :uuid")
-    Coin getCoinOnUID(String uuid);
+
 
 }

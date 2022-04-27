@@ -53,6 +53,7 @@ public class retrofitViewModel extends AndroidViewModel implements IViewModel {
     private void handleResponse(CoinResponseMain response) {
         //data.postValue(response.getData().getCoins()); // Retour d'une liste à partir de la répones
         for (Coin coin : response.getData().getCoins()) {
+            coin.update_Sparkline();
             stockageDB.insertData(coin);
         }
 

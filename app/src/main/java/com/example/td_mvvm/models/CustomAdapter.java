@@ -19,6 +19,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     public interface OnItemClickListener {
         void onItemClick(Coin item);
+        void onItemLongClick(Coin item);
     }
 
     private ArrayList<Coin> localDataSet; // Dataset fourni est une liste de coin
@@ -54,7 +55,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             int rang = item.getRank();
             this.rang.setText(String.valueOf(rang)); // Conversion en String obligatoire, int à l'origine
             this.nom.setText(nom);
-            this.prix.setText(price);
+            this.prix.setText(price.substring(0,7)+"$");
             String uri = item.getIconUrl();
             uri = uri.substring(0, uri.length() - 3) + "png";
             Picasso.with(maVue.getContext()).load(uri).fit().centerInside().error(R.drawable.ic_launcher_background).into(monImage);
@@ -62,6 +63,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                 @Override
                 public void onClick(View view) {
                     listener.onItemClick(item);
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    listener.onItemLongClick(item);
+                    return true;
                 }
             });
         }

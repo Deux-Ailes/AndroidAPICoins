@@ -40,7 +40,6 @@ public class Coin implements Serializable {
     @ColumnInfo(name = "marketCap")
     private String marketCap;
 
-    //    @ColumnInfo(name = "sparkLine")
     @Ignore
     private List<String> sparkline;
 
