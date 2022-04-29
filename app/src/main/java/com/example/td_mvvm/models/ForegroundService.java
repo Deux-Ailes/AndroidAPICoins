@@ -10,23 +10,25 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
-import com.example.td_mvvm.MainActivity;
+import com.example.td_mvvm.activities.MainActivity;
 import com.example.td_mvvm.R;
 import com.example.td_mvvm.storage.PreferencesHelper;
 
 public class ForegroundService extends Service {
+
+    private final static int ID_COMM = 1;
+    private static boolean instanciated = false;
+    public static Boolean isRunning;
     private HandlerThread handlerThread;
     private Handler handler;
-    public static Boolean isRunning;
-    private final static int ID_COMM = 1;
     private NotificationManager nf;
+
     public ForegroundService() {
 
     }
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -51,59 +53,68 @@ public class ForegroundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        handlerThread= new HandlerThread("service_thread");
-        handlerThread.start();
-        Looper looper = handlerThread.getLooper();
-        handler = new Handler(looper);
-        //notifMana = new NotificationManagerCompat();
-        // Faire un timer ou un truc du genre pour trigger toutes les 5 minutes startMonitoring ?
-        nf = (NotificationManager) getBaseContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        if(!instanciated){ // Boolean qui indique si le service a déjà été instancié
+            handlerThread = new HandlerThread("service_thread");
+            handlerThread.start();
+            Looper looper = handlerThread.getLooper();
+            handler = new Handler(looper);
+            nf = (NotificationManager) getBaseContext().getSystemService(Context.NOTIFICATION_SERVICE); // Nécessaire pour gérer les notifs
+            instanciated = true; // Empêche une nouvelle instanciation
+        }
+
     }
 
-    private void setupForeground(){
-        // Lancer la notif
-        if(checkFavCoinInDB()) startForeground(ID_COMM,creationNotif());
+    /**
+     * Si une coin est présente dans la database, lance la première notif en foreground
+     */
+    private void setupForeground() {
+
+        if (checkFavCoinInDB()) startForeground(ID_COMM, creationNotification());
     }
 
-    private void startMonitoring(){
-        // Get la crypto favorite
-        int a = 2;
-       handler.post(new Runnable() {
-           @Override
-           public void run() {
+    /**
+     * Poste une notif toutes les 5 minutes si une coin est présente dans la DB.
+     */
+    private void startMonitoring() {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
                 // Get la crypto et son petit prix
-
-                if(checkFavCoinInDB())
-                    nf.notify(ID_COMM,creationNotif());
-
-                //notifMana.notify(ID_COMM,creationNotif());
-               // ON BOUCLE ICI
-               handler.postDelayed(this, 5*60*1000);
-           }
-       });
+                if (checkFavCoinInDB())
+                    nf.notify(ID_COMM, creationNotification()); // Hop petite notif
+                // Boucle de 5 minutes
+                handler.postDelayed(this, 5 * 60 * 1000);
+            }
+        });
     }
 
-    private Coin getFavCoin(){
+    /**
+     * Récupère dans la DB la coin favorite
+     * @return Coin favorite
+     */
+    private CoinTable getFavCoin() {
         // Aller dans les sharedPreferences
         return PreferencesHelper.getInstance().getFavCoinData();
     }
 
 
-    private Notification creationNotif(){
-        Coin coin = getFavCoin();
-        Notification notification = new NotificationCompat.Builder(this, MainActivity.Channel1)
+    /**
+     * Créer une notification en se basant sur la coin stockée en DB
+     * @return Notification construite
+     */
+    private Notification creationNotification() {
+        CoinTable coinTable = getFavCoin();
+        return new NotificationCompat.Builder(this, MainActivity.Channel1)
                 .setSmallIcon(R.drawable.brake_disc)
-                .setContentTitle("Tu es aussi beau qu'un camion")
-                .setContentText("Le "+ coin.getName() + " est actuellement à " + coin.getPrice().substring(0,7)+ "$")
-                .setPriority(NotificationCompat.PRIORITY_MAX)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setContentTitle(getString(R.string.notifTitle))
+                .setContentText(String.format("Le %s est actuellement à %s$", coinTable.getName(), coinTable.getPrice().substring(0, 7)))
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_PROGRESS)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .build();
-        return notification;
     }
 
-    private boolean checkFavCoinInDB(){
-        if (PreferencesHelper.getInstance().getFavCoinData()!=null) return true;
-        return false;
+    private boolean checkFavCoinInDB() {
+        return PreferencesHelper.getInstance().getFavCoinData() != null;
     }
 }

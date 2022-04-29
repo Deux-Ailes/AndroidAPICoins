@@ -1,12 +1,21 @@
 package com.example.td_mvvm.viewModels;
 
-import android.app.Application;
 
+
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import android.app.Application;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.td_mvvm.models.Coin;
+import com.example.td_mvvm.models.CoinTable;
 import com.example.td_mvvm.models.CoinResponseMain;
 import com.example.td_mvvm.network.RetrofitNetworkManager;
 import com.example.td_mvvm.storage.DataRepository;
@@ -18,14 +27,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class retrofitViewModel extends AndroidViewModel implements IViewModel {
+public class retrofitViewModel extends AndroidViewModel {
 
-    private LiveData<List<Coin>> data = new MutableLiveData<>(); // On attend une liste de Coin pour étudier les changements de données
+    private LiveData<List<CoinTable>> data = new MutableLiveData<>(); // On attend une liste de Coin pour étudier les changements de données
     private DataRepository stockageDB;
-
-    public LiveData<List<Coin>> getData() {
-        return data;
-    } // Retourne une liste de coins
+    private MutableLiveData<CoinTable> monCoin = new MutableLiveData<>();
 
     public retrofitViewModel(Application application) {
         super(application);
@@ -33,11 +39,19 @@ public class retrofitViewModel extends AndroidViewModel implements IViewModel {
         data = stockageDB.getData();
     }
 
-    @Override
-    public void acquisitionDonnes() {
+    public LiveData<List<CoinTable>> getData() {
+        return data;
+    } // Retourne une liste de coinTables
+
+    public MutableLiveData<CoinTable> getCoin() {
+        return monCoin;
+    }
+
+    public void acquisitionDonnees() {
         RetrofitNetworkManager.coinRankingAPI.getCoinList().enqueue(new Callback<CoinResponseMain>() {
             @Override
-            public void onResponse(Call<CoinResponseMain> call, Response<CoinResponseMain> response) { // L'appel est de type CoinResponseMain
+            public void onResponse(Call<CoinResponseMain> call,
+                                   Response<CoinResponseMain> response) { // L'appel est de type CoinResponseMain
                 if (response.body() != null) {
                     handleResponse(response.body());
                 }
@@ -46,16 +60,21 @@ public class retrofitViewModel extends AndroidViewModel implements IViewModel {
             @Override
             public void onFailure(Call<CoinResponseMain> call, Throwable t) {
                 // NO-OP
+                System.out.println("ALED");
+                stockageDB.insertData(stockageDB.getData().getValue().get(stockageDB.getData().getValue().size()-1)); // C'est vraiment moche mais ça refresh
             }
         });
     }
 
+
     private void handleResponse(CoinResponseMain response) {
         //data.postValue(response.getData().getCoins()); // Retour d'une liste à partir de la répones
-        for (Coin coin : response.getData().getCoins()) {
-            coin.update_Sparkline();
-            stockageDB.insertData(coin);
+        for (CoinTable coinTable : response.getData().getCoins()) {
+            coinTable.update_Sparkline();
+            stockageDB.insertData(coinTable);
         }
-
     }
+
+
+
 }

@@ -12,9 +12,12 @@ import com.google.gson.reflect.TypeToken;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.List;
-
+/**
+ * Classe dédiée à la requête d'une liste de Coins.
+ * Troisième niveau sur trois.
+ */
 @Entity(tableName = "pieces_table")
-public class Coin implements Serializable {
+public class CoinTable implements Serializable {
     @ColumnInfo(name = "symbol")
     private String symbol;
 
@@ -39,9 +42,19 @@ public class Coin implements Serializable {
 
     @ColumnInfo(name = "marketCap")
     private String marketCap;
-
+    @ColumnInfo(name = "change")
+    private String change;
     @Ignore
     private List<String> sparkline;
+    private String data_sparkline;
+
+    public String getChange() {
+        return change;
+    }
+
+    public void setChange(String change) {
+        this.change = change;
+    }
 
     public String getData_sparkline() {
         return data_sparkline;
@@ -64,8 +77,6 @@ public class Coin implements Serializable {
         }.getType();
         return gson.fromJson(this.data_sparkline, type);
     }
-
-    private String data_sparkline;
 
     public String getSymbol() {
         return symbol;

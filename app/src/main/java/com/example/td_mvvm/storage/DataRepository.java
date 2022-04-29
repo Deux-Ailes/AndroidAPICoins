@@ -4,14 +4,14 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.td_mvvm.models.Coin;
+import com.example.td_mvvm.models.CoinTable;
 
 import java.util.List;
 
 public class DataRepository {
 
     private final SampleDao sampleDao;
-    private final LiveData<List<Coin>> data;
+    private final LiveData<List<CoinTable>> data;
 
     public DataRepository(Context applicationContext) {
         AppDatabase database = AppDatabase.getDatabase(applicationContext);
@@ -19,11 +19,11 @@ public class DataRepository {
         this.data = sampleDao.getAll();
     }
 
-    public LiveData<List<Coin>> getData() {
+    public LiveData<List<CoinTable>> getData() {
         return data;
     }
 
-    public void insertData(Coin maPiece) {
+    public void insertData(CoinTable maPiece) {
         AppDatabase.databaseWriteExecutor.execute(() -> {
             sampleDao.insert(maPiece);
         });
