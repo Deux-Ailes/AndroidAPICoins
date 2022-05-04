@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">G la data</string>
+    <string name="app_name">Monnaies cryptées</string>
     <string name="refresh">Mise à jour des informations</string>
     <string name="clic">CLIC</string>
     <string name="toasting">Test fct</string>
     <string name="DataComing">Chargement des données...</string>
     <string name="ImageCoin">Icon de la coinTable</string>
     <string name="goBack">Retour</string>
-    <string name="notifTitle">Weu weu, ceci est une information.</string>
+    <string name="notifTitle">Braking news !</string>
     <string name="api">API</string>
     <string name="logo_de_base">Logo de base</string>
 </resources>

@@ -7,15 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.td_mvvm.databinding.ActivityCoinDetailsBinding;
 import com.example.td_mvvm.databinding.ActivityMainBinding;
 import com.example.td_mvvm.models.CoinTable;
 import com.example.td_mvvm.models.CustomAdapter;
@@ -40,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private CustomAdapter monAdaptateurPerso;
     private ArrayList<CoinTable> listeDesInfos;
     private RecyclerView recyclage;
+    private static Intent intent;
 
     public static Context getContext() {
         return APPLICATION_CONTEXT;
@@ -62,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Paramétrage de la notification
         createNotificationChannels();
-        Intent intent = new Intent(this, ForegroundService.class);
+        intent = new Intent(this, ForegroundService.class);
         Boolean test = checkIfServiceActivated(ForegroundService.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && savedInstanceState == null) {
             getContext().startForegroundService(intent);
@@ -85,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         maVue.getData().observe(this, coinTables -> {
             listeDesInfos.clear();
             listeDesInfos.addAll(coinTables);
+            listeDesInfos.stream().forEach(element -> element.setFavori(false)); // On met tous les éléments par défaut comme étant non favoris
             Collections.sort(listeDesInfos, new Comparator<CoinTable>() { // faut bien les trier dans l'ordre, changement de l'ordre dans
                 @Override
                 public int compare(CoinTable o1, CoinTable o2) {
@@ -92,16 +91,31 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             if (PreferencesHelper.getInstance().getFavCoinData() != null) {
-                PreferencesHelper.getInstance()
-                        .setFavCoinData(
-                                listeDesInfos.stream()
-                                        .filter(coin -> PreferencesHelper.getInstance().getFavCoin().equals(coin.getUuid()))
-                                        .findAny()
-                                        .orElse(null));
+                CoinTable favoriteCoin = listeDesInfos.stream()
+                        .filter(coin -> PreferencesHelper.getInstance().getFavCoin().equals(coin.getUuid()))
+                        .findAny()
+                        .orElse(null);
+                if (favoriteCoin != null) {
+                    PreferencesHelper.getInstance().setFavCoinData(favoriteCoin);
+                    int indexCoin = listeDesInfos.indexOf(favoriteCoin);
+                    listeDesInfos.get(indexCoin).setFavori(true);
+                }
+                this.monAdaptateurPerso.notifyDataSetChanged();
             }
-            this.monAdaptateurPerso.notifyDataSetChanged();
             binding.swipeRefreshLayout.setRefreshing(false);
         });
+    }
+
+    private void updateRecyclerFavori() {
+        listeDesInfos.stream().forEach(element -> element.setFavori(false));
+        CoinTable favoriteCoin = listeDesInfos.stream()
+                .filter(coin -> PreferencesHelper.getInstance().getFavCoin().equals(coin.getUuid()))
+                .findAny()
+                .orElse(null);
+        if (favoriteCoin != null) {
+            favoriteCoin.setFavori(true);
+            this.monAdaptateurPerso.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -138,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemLongClick(CoinTable item) {
                 PreferencesHelper.getInstance().setFavCoin(item.getUuid());
                 PreferencesHelper.getInstance().setFavCoinData(item);
+                updateRecyclerFavori();
             }
         });
 
@@ -146,13 +161,6 @@ public class MainActivity extends AppCompatActivity {
         recyclage.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
 
-    private void configureRefresher(){
-        binding.swipeRefreshLayout.setOnRefreshListener(() -> {
-            binding.swipeRefreshLayout.setRefreshing(true);
-            listeDesInfos.clear();
-            maVue.acquisitionDonnees();
-        });
-    }
 
     /**
      * Créer le notification channel

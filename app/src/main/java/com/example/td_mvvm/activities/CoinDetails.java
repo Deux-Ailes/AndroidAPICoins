@@ -28,6 +28,7 @@ public class CoinDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         binding = ActivityCoinDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         Intent intent = getIntent();
@@ -45,6 +46,9 @@ public class CoinDetails extends AppCompatActivity {
             this.maCoin = coin;
             updateFields();
         });
+        binding.imgReturn.setOnClickListener(v->{
+            this.finish();
+        });
     }
 
     /**
@@ -60,10 +64,7 @@ public class CoinDetails extends AppCompatActivity {
         binding.tvName.setText(this.maCoin.getName());
         binding.tvPrice.setText(String.format("%s $", this.maCoin.getPrice()));
         binding.tvRank.setText(String.format("Rang : %s", this.maCoin.getRank()));
-        binding.button.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        });
+
         // Image
         ImageView iv = binding.imageView;
         String uri = this.maCoin.getIconUrl();

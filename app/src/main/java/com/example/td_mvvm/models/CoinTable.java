@@ -48,6 +48,9 @@ public class CoinTable implements Serializable {
     private List<String> sparkline;
     private String data_sparkline;
 
+    @Ignore
+    private boolean favori;
+
     public String getChange() {
         return change;
     }
@@ -150,5 +153,13 @@ public class CoinTable implements Serializable {
 
     public void setBtcPrice(String btcPrice) {
         this.btcPrice = btcPrice;
+    }
+
+    public boolean isFavori() {
+        return favori;
+    }
+
+    public void setFavori(boolean favori) {
+        this.favori = favori;
     }
 }

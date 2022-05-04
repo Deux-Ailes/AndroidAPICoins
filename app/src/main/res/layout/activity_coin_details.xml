@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".activities.CoinDetails">
 
+    <ImageView
+        android:id="@+id/imgReturn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back" />
+
     <LinearLayout
         android:id="@+id/layoutLoading"
         android:layout_width="0dp"
@@ -96,15 +104,5 @@
         </RelativeLayout>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="97dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/goBack"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

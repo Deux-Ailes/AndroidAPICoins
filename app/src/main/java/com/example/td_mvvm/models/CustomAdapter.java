@@ -1,5 +1,6 @@
 package com.example.td_mvvm.models;
 
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         private final LinearLayout layout;
         private final ImageView monImage;
         private final View maVue;
+        private final ImageView favori;
 
         /**
          * Constructeur qui attribue aux var locales les TV
@@ -72,6 +74,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             nom = view.findViewById(R.id.Nom);
             layout = view.findViewById(R.id.layoutdefou);
             monImage = view.findViewById(R.id.monIV);
+            favori = view.findViewById(R.id.favImage);
             maVue = view;
         }
 
@@ -82,6 +85,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             this.rang.setText(String.valueOf(rang)); // Conversion en String obligatoire, int à l'origine
             this.nom.setText(nom);
             this.prix.setText(price.substring(0, 7) + "$");
+            favori.setVisibility(View.INVISIBLE);
             String uri = item.getIconUrl();
             uri = uri.substring(0, uri.length() - 3) + "png";
             Picasso.with(maVue.getContext()).load(uri).fit().centerInside().error(R.drawable.ic_launcher_background).into(monImage);
@@ -92,6 +96,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                 }
             });
 
+            if(item.isFavori()) favori.setVisibility(View.VISIBLE);
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {

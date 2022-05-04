@@ -43,6 +43,8 @@ public class DataCoinInformation extends AndroidViewModel {
                 // NO-OP
                 t.printStackTrace();
                 Log.e("Aled", "C la merde");
+                //TODO : Faire une fonction pour avertir que le catch des datas n'a pas fonctionné
+
             }
 
 
