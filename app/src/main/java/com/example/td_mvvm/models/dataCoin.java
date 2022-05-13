@@ -1,15 +1,18 @@
 package com.example.td_mvvm.models;
 
 import java.util.List;
-
+/**
+ * Classe dédiée à la requête d'une liste de Coins.
+ * Second niveau sur trois.
+ */
 public class dataCoin {
-    public List<Coin> getCoins() {
+    List<CoinTable> coins;
+
+    public List<CoinTable> getCoins() {
         return coins;
     }
 
-    public void setCoins(List<Coin> coins) {
-        this.coins = coins;
+    public void setCoins(List<CoinTable> coinTables) {
+        this.coins = coinTables;
     }
-
-    List<Coin> coins;
 }

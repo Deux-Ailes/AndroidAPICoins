@@ -13,8 +13,14 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
 
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemalocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -46,6 +52,9 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation "androidx.room:room-runtime:2.4.2"
     annotationProcessor "androidx.room:room-compiler:2.4.2"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    implementation "androidx.cardview:cardview:1.0.0"
 }
 
 

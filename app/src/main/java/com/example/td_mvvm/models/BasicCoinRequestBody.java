@@ -1,12 +1,12 @@
 package com.example.td_mvvm.models;
 
 /**
- * Classe dédiée à la requête d'une liste de Coins.
+ * Classe dédiée à la requête d'un Coin particulier.
  * Premier niveau sur trois.
  */
-public class CoinResponseMain {
+public class BasicCoinRequestBody {
     private String status;
-    private dataCoin data;
+    private DataBodyCoin data;
 
     public String getStatus() {
         return status;
@@ -16,12 +16,11 @@ public class CoinResponseMain {
         this.status = status;
     }
 
-    public dataCoin getData() {
+    public DataBodyCoin getData() {
         return data;
     }
 
-    public void setData(dataCoin data) {
+    public void setData(DataBodyCoin data) {
         this.data = data;
     }
-
 }

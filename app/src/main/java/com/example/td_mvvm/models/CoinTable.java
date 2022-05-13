@@ -12,9 +12,12 @@ import com.google.gson.reflect.TypeToken;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.List;
-
+/**
+ * Classe dédiée à la requête d'une liste de Coins.
+ * Troisième niveau sur trois.
+ */
 @Entity(tableName = "pieces_table")
-public class Coin implements Serializable {
+public class CoinTable implements Serializable {
     @ColumnInfo(name = "symbol")
     private String symbol;
 
@@ -31,15 +34,30 @@ public class Coin implements Serializable {
     @ColumnInfo(name = "rank")
     private int rank;
 
+    @ColumnInfo(name = "btcPrice")
+    private String btcPrice;
+
     @ColumnInfo(name = "iconUrl")
     private String iconUrl;
 
     @ColumnInfo(name = "marketCap")
     private String marketCap;
-
-//    @ColumnInfo(name = "sparkLine")
+    @ColumnInfo(name = "change")
+    private String change;
     @Ignore
     private List<String> sparkline;
+    private String data_sparkline;
+
+    @Ignore
+    private boolean favori;
+
+    public String getChange() {
+        return change;
+    }
+
+    public void setChange(String change) {
+        this.change = change;
+    }
 
     public String getData_sparkline() {
         return data_sparkline;
@@ -49,19 +67,19 @@ public class Coin implements Serializable {
         this.data_sparkline = data_sparkline;
     }
 
-    public void update_Sparkline(){
+    public void update_Sparkline() {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<String>>() {}.getType();
+        Type type = new TypeToken<List<String>>() {
+        }.getType();
         data_sparkline = gson.toJson(this.getSparkline(), type);
     }
 
-    public List<String> retrieve_Sparkline(){
+    public List<String> retrieve_Sparkline() {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<String>>() {}.getType();
-        return gson.fromJson(this.data_sparkline,type);
+        Type type = new TypeToken<List<String>>() {
+        }.getType();
+        return gson.fromJson(this.data_sparkline, type);
     }
-
-    private String data_sparkline;
 
     public String getSymbol() {
         return symbol;
@@ -104,7 +122,7 @@ public class Coin implements Serializable {
         this.uuid = uuid;
     }
 
-   public List<String> getSparkline() {
+    public List<String> getSparkline() {
         return sparkline;
     }
 
@@ -127,5 +145,21 @@ public class Coin implements Serializable {
 
     public void setIconUrl(String icon) {
         this.iconUrl = icon;
+    }
+
+    public String getBtcPrice() {
+        return btcPrice;
+    }
+
+    public void setBtcPrice(String btcPrice) {
+        this.btcPrice = btcPrice;
+    }
+
+    public boolean isFavori() {
+        return favori;
+    }
+
+    public void setFavori(boolean favori) {
+        this.favori = favori;
     }
 }
